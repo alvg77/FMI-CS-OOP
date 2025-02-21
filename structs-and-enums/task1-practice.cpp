@@ -1,6 +1,6 @@
 #include <iostream>
 
-constexpr unsigned max_hero_name = 256;
+constexpr unsigned MAX_HERO_NAME = 256;
 
 enum Division {
     ASSASSIN,
@@ -81,8 +81,8 @@ void deinit_hero(Hero* hero) {
 int main() {
     Hero hero {};
 
-    char* hero_name = new char[max_hero_name];
-    std::cin.getline(hero_name, max_hero_name);
+    char* hero_name = new char[MAX_HERO_NAME];
+    std::cin.getline(hero_name, MAX_HERO_NAME);
 
     init_hero(&hero, hero_name, MAGE, RANGE);
     print_hero(&hero);
