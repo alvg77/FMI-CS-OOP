@@ -26,15 +26,13 @@ auto composition(CompFuncFirst<T,U> f, CompFuncSecond<U,S> s) {
 // task 3
 template <typename T>
 auto repeat(T (*f)(T), unsigned n) {
-    auto function = f;
+    return [f, n] (T x) {
+        for (int i = 0; i < n; ++i) {
+            x = f(x);
+        }
 
-    for (int i = 0; i < n; ++i) {
-        function = [function](T x) {
-            return function(x);
-        };
-    }
-
-    return function;
+        return x;
+    };
 }
 
 // task 4
@@ -154,66 +152,66 @@ void sort_by(bool (*cmp)(T, T), T* arr, unsigned n) {
 }
 
 int main() {
-    // task 1
-    std::cout << std::boolalpha << is_fixed_point<int>([](int n){ return n * 5;}, 0) << '\n'; // -> true
-    std::cout << std::boolalpha << is_fixed_point<int>([](int n){ return n * 5;}, 2) << '\n'; // -> false
+    // // task 1
+    // std::cout << std::boolalpha << is_fixed_point<int>([](int n){ return n * 5;}, 0) << '\n'; // -> true
+    // std::cout << std::boolalpha << is_fixed_point<int>([](int n){ return n * 5;}, 2) << '\n'; // -> false
 
-    // task 2
-    std::cout << composition<int, int, int>([](int x){ return x + 1;}, 
-                                        [](int x){ return x * 2;})(5) << '\n'; // -> 12
+    // // task 2
+    // std::cout << composition<int, int, int>([](int x){ return x + 1;}, 
+    //                                     [](int x){ return x * 2;})(5) << '\n'; // -> 12
 
-    // task 4
-    std::cout << derivative<double>([](double x){ return x * x;})(5) << '\n'; // -> ~10
+    // // task 4
+    // std::cout << derivative<double>([](double x){ return x * x;})(5) << '\n'; // -> ~10
     
-    // task 5
-    int arr[] = {1, 2, 3, 4};
-    print(arr, 4); // -> 1 2 3 4
+    // // task 5
+    // int arr[] = {1, 2, 3, 4};
+    // print(arr, 4); // -> 1 2 3 4
 
-    // task 6
-    int arr[] = {1, 2, 3, 4};
-    int* result = map<int, int>(arr, 4, [](int element){ return element * element;});
+    // // task 6
+    // int arr[] = {1, 2, 3, 4};
+    // int* result = map<int, int>(arr, 4, [](int element){ return element * element;});
     
-    print(result, 4); // -> 1 4 9 16
+    // print(result, 4); // -> 1 4 9 16
     
-    delete[] result;
+    // delete[] result;
 
-    // task 7
-    int arr[] = {1, 2, 3, 4};
-    int* result = filter<int>(arr, 4, [](int element){ return element % 2 == 0;});
+    // // task 7
+    // int arr[] = {1, 2, 3, 4};
+    // int* result = filter<int>(arr, 4, [](int element){ return element % 2 == 0;});
 
-    print(result, 2); // -> 2 4
+    // print(result, 2); // -> 2 4
 
-    delete[] result;
+    // delete[] result;
 
-    // task 8
-    int arr[] = {1, 2, 3, 4, 5};
-    std::cout << reduce<int, int>([](int curr, int res){
-        return res * curr;
-    }, 1, arr, 5) << '\n'; // -> 120
+    // // task 8
+    // int arr[] = {1, 2, 3, 4, 5};
+    // std::cout << reduce<int, int>([](int curr, int res){
+    //     return res * curr;
+    // }, 1, arr, 5) << '\n'; // -> 120
 
-    // task 9
-    int arr[] = {1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10};
-    std::cout << sum_odd_squares(arr, 10) << '\n'; // -> 165
+    // // task 9
+    // int arr[] = {1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10};
+    // std::cout << sum_odd_squares(arr, 10) << '\n'; // -> 165
 
-    // task 10
-    int arr[] = {1, 2, 3, 4, 5};
+    // // task 10
+    // int arr[] = {1, 2, 3, 4, 5};
 
-    std::cout << std::boolalpha << all<int>([](int x){ return x % 2 == 0; }, arr, 5) << '\n'; // -> false
-    std::cout << std::boolalpha << any<int>([](int x){ return x % 2 == 0; }, arr, 5) << '\n'; // -> true
+    // std::cout << std::boolalpha << all<int>([](int x){ return x % 2 == 0; }, arr, 5) << '\n'; // -> false
+    // std::cout << std::boolalpha << any<int>([](int x){ return x % 2 == 0; }, arr, 5) << '\n'; // -> true
     
-    // task 11
-    int arr[] = {1, 2, 3, 4, 5};
-    sort_by<int>([](int a, int b){
-        return a <= b;
-    }, arr, 5);
+    // // task 11
+    // int arr[] = {1, 2, 3, 4, 5};
+    // sort_by<int>([](int a, int b){
+    //     return a <= b;
+    // }, arr, 5);
 
-    print(arr, 5); // -> 1 2 3 4 5
+    // print(arr, 5); // -> 1 2 3 4 5
 
-    sort_by<int>([](int a, int b){
-        return a > b;
-    }, arr, 5);
+    // sort_by<int>([](int a, int b){
+    //     return a > b;
+    // }, arr, 5);
 
-    print(arr, 5); // -> 5 4 3 2 1
+    // print(arr, 5); // -> 5 4 3 2 1
 
     return 0;
 }
