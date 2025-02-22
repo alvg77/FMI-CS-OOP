@@ -1,23 +1,17 @@
 #include <iostream>
 
+template <typename T>
+using Unary = T(*)(T);
+
 // task 1
 template <typename T>
-using Fixed = T (*)(T);
-
-template <typename T>
-bool is_fixed_point(Fixed<T> f, T x) {
+bool is_fixed_point(Unary<T> f, T x) {
     return f(x) == x;
 }
 
 // task 2
-template <typename T, typename U>
-using CompFuncFirst = T (*)(U);
-
-template <typename U, typename S>
-using CompFuncSecond = U (*)(S);
-
 template <typename T, typename U, typename S>
-auto composition(CompFuncFirst<T,U> f, CompFuncSecond<U,S> s) {
+auto composition(T(*f)(U), U(*s)(S)) {
     return [f, s] (T x) {
         return s(f(x));
     };
@@ -25,7 +19,7 @@ auto composition(CompFuncFirst<T,U> f, CompFuncSecond<U,S> s) {
 
 // task 3
 template <typename T>
-auto repeat(T (*f)(T), unsigned n) {
+auto repeat(Unary<T> f, unsigned n) {
     return [f, n] (T x) {
         for (int i = 0; i < n; ++i) {
             x = f(x);
@@ -37,7 +31,7 @@ auto repeat(T (*f)(T), unsigned n) {
 
 // task 4
 template <typename T>
-auto derivative(T (*f)(T)) {
+auto derivative(Unary<T> f) {
     constexpr double h = 1e-5;
 
     return [f, h](T x) {
@@ -57,7 +51,7 @@ void print(T* arr, unsigned n) {
 
 // task 6
 template <typename T, typename U>
-U* map(T* arr, unsigned n, U (*f)(T)) {
+U* map(T* arr, unsigned n, U(*f)(T)) {
     U* new_arr = new U[n];
     for (int i = 0; i < n; ++i) {
         new_arr[i] = f(arr[i]);
@@ -68,7 +62,7 @@ U* map(T* arr, unsigned n, U (*f)(T)) {
 
 // task 7
 template <typename T>
-T* filter(T* arr, unsigned n, bool (*f)(T)) {
+T* filter(T* arr, unsigned n, bool(*f)(T)) {
     T* new_arr = new T[n];
     unsigned count = 0;
 
@@ -83,7 +77,7 @@ T* filter(T* arr, unsigned n, bool (*f)(T)) {
 
 // task 8
 template <typename T, typename U>
-U reduce(U (*f)(T, U), U init, T* arr, unsigned n) {
+U reduce(U(*f)(T, U), U init, T* arr, unsigned n) {
     for (int i = n - 1; i >= 0; --i) {
         init = f(arr[i], init);
     } 
@@ -114,7 +108,7 @@ int sum_odd_squares(int* arr, unsigned n) {
 
 // task 10
 template <typename T>
-bool all(bool (*f)(T), T* arr, unsigned n) {
+bool all(bool(*f)(T), T* arr, unsigned n) {
     bool valid = true;
     int i = 0;
 
@@ -126,7 +120,7 @@ bool all(bool (*f)(T), T* arr, unsigned n) {
 }
 
 template <typename T>
-bool any(bool (*f)(T), T* arr, unsigned n) {
+bool any(bool(*f)(T), T* arr, unsigned n) {
     bool valid = false;
     int i = 0;
     
@@ -139,7 +133,7 @@ bool any(bool (*f)(T), T* arr, unsigned n) {
 
 // task 11
 template <typename T>
-void sort_by(bool (*cmp)(T, T), T* arr, unsigned n) {
+void sort_by(bool(*cmp)(T, T), T* arr, unsigned n) {
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n - i - 1; ++j) {
             if (cmp(arr[j], arr[j+1])) {
