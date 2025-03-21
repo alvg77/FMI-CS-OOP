@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "LinkedList.hpp"
 
 int main() {
     auto l = LinkedList<int>{};
