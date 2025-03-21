@@ -1,5 +1,7 @@
-#include <iostream>
+#ifndef LINKEDLIST_TPP
+#define LINKEDLIST_TPP
 
+#include <iostream>
 #include "LinkedList.hpp"
 
 template<typename T>
@@ -146,3 +148,5 @@ Node<T> *LinkedList<T>::getTail() {
 
     return  current;
 }
+
+#endif
