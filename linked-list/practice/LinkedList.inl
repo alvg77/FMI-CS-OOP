@@ -1,5 +1,5 @@
-#ifndef LINKEDLIST_INL_HPP
-#define LINKEDLIST_INL_HPP
+#ifndef LINKEDLIST_INL
+#define LINKEDLIST_INL
 
 #include <iostream>
 #include "LinkedList.hpp"
