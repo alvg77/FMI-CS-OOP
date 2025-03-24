@@ -2,7 +2,7 @@
 #define LINKEDLIST_INL
 
 #include <iostream>
-#include "LinkedList.hpp"
+#include "LinkedList.h"
 
 template<typename T>
 LinkedList<T>::LinkedList()
@@ -38,8 +38,8 @@ LinkedList<T>::LinkedList(const LinkedList &other) {
 template<typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& other) {
     if (this != &other) {
-        LinkedList<T> temp (other);
-        swap(other);
+        LinkedList temp (other);
+        std::swap(this->head, temp.head);
     }
 
     return *this;
@@ -137,11 +137,6 @@ Node<T> *LinkedList<T>::getTail() {
     }
 
     return  current;
-}
-
-template<typename T>
-void LinkedList<T>::swap(const LinkedList<T>& l) {
-    std::swap(this->head, l.head);
 }
 
 #endif
