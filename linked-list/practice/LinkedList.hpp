@@ -31,6 +31,6 @@ private:
     Node<T>* getTail();
 };
 
-#include "LinkedList.inl.hpp"
+#include "LinkedList.inl"
 
 #endif
