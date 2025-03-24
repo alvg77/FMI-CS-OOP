@@ -29,6 +29,7 @@ private:
     Node<T>* head;
 
     Node<T>* getTail();
+    void swap(const LinkedList<T>& l);
 };
 
 #include "LinkedList.inl"
