@@ -1,4 +1,4 @@
-#include "LinkedList.hpp"
+#include "LinkedList.h"
 
 int main() {
     auto l = LinkedList<int>{};
@@ -14,6 +14,10 @@ int main() {
 
     l.reverse();
     l.printElements();
+
+    auto ll = LinkedList<int>{};
+    ll = l;
+    ll.printElements();
 
     return 0;
 }
