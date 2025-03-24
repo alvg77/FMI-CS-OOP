@@ -38,18 +38,8 @@ LinkedList<T>::LinkedList(const LinkedList &other) {
 template<typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& other) {
     if (this != &other) {
-        Node<T>* otherTemp = other.head;
-        this->head = new Node<T> {otherTemp->data, nullptr};
-        Node<T>* thisTemp = this->head;
-
-        otherTemp = otherTemp->next;
-
-        while (otherTemp != nullptr) {
-            thisTemp->next = new Node<T> {otherTemp->data, nullptr};
-
-            thisTemp = thisTemp->next;
-            otherTemp = otherTemp->next;
-        }
+        LinkedList<T> temp (other);
+        swap(other);
     }
 
     return *this;
@@ -147,6 +137,11 @@ Node<T> *LinkedList<T>::getTail() {
     }
 
     return  current;
+}
+
+template<typename T>
+void LinkedList<T>::swap(const LinkedList<T>& l) {
+    std::swap(this->head, l.head);
 }
 
 #endif
